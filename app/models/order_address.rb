@@ -9,6 +9,8 @@ class OrderAddress
     validates :token
     validates :city
     validates :addresses
+    validates :user_id
+    validates :item_id
   end
 
     validates :prefecture_id, numericality: { other_than: 1 ,message: "Prefecture Select" }
