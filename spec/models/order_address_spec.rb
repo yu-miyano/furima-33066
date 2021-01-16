@@ -52,12 +52,6 @@ describe "商品の購入" do
       expect(@order.errors.full_messages).to include("Postal code Postal code Input correctly")
     end
 
-    it "postal_codeは数字のみでないと購入できない" do
-      @order.postal_code = "1234567a"
-      @order.valid?
-      expect(@order.errors.full_messages).to include("Postal code Postal code Input correctly")
-    end
-
     it "prefecture_idが未入力では購入できない" do
       @order.prefecture_id = 1
       @order.valid?
@@ -84,6 +78,12 @@ describe "商品の購入" do
 
     it "phone_numberが12桁以上なら購入できない" do
       @order.phone_number = "090123456789"
+      @order.valid?
+      expect(@order.errors.full_messages).to include("Phone number Phone number Input correctly")
+    end
+
+    it "phone_numberは数字のみでないと購入できない" do
+      @order.phone_number = "0901234567a"
       @order.valid?
       expect(@order.errors.full_messages).to include("Phone number Phone number Input correctly")
     end
