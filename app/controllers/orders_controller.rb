@@ -1,10 +1,10 @@
 class OrdersController < ApplicationController
+  before_action :set_item, only: [:index, :create]
   before_action :authenticate_user!
   before_action :move_to_index, only: [:index, :create]
   
   def index
     @order_address = OrderAddress.new
-    @item = Item.find(params[:item_id])
   end
 
   def create
@@ -14,7 +14,6 @@ class OrdersController < ApplicationController
       @order_address.save
       redirect_to root_path
     else
-      @item = Item.find(params[:item_id])
       render :index
     end
   end
@@ -31,6 +30,10 @@ class OrdersController < ApplicationController
         card: params[:token],    # カードトークン
         currency: 'jpy'                 # 通貨の種類（日本円）
       )
+    end
+
+    def set_item
+      @item = Item.find(params[:item_id])
     end
 
     def move_to_index

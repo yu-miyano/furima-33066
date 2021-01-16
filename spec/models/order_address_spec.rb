@@ -28,6 +28,18 @@ describe "商品の購入" do
       expect(@order.errors.full_messages).to include("Token can't be blank")
     end
 
+    it "user_idが空では購入できない" do
+      @order.user_id = ""
+      @order.valid?
+      expect(@order.errors.full_messages).to include("User can't be blank")
+    end
+
+    it "item_idが空では購入できない" do
+      @order.item_id = ""
+      @order.valid?
+      expect(@order.errors.full_messages).to include("Item can't be blank")
+    end
+
     it "postal_codeが空では購入できない" do
       @order.postal_code = ""
       @order.valid?
@@ -36,6 +48,12 @@ describe "商品の購入" do
     
     it "postal_codeにハイフンがなければ購入できない" do
       @order.postal_code = "1234567"
+      @order.valid?
+      expect(@order.errors.full_messages).to include("Postal code Postal code Input correctly")
+    end
+
+    it "postal_codeは数字のみでないと購入できない" do
+      @order.postal_code = "1234567a"
       @order.valid?
       expect(@order.errors.full_messages).to include("Postal code Postal code Input correctly")
     end
